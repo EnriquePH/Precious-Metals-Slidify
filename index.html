@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PRECIOUS METALS PRICE FORECAST</title>
+  <meta charset="utf-8">
+  <meta name="description" content="PRECIOUS METALS PRICE FORECAST">
+  <meta name="author" content="Enrique Pérez Herrero">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="data:image/png;base64,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">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>PRECIOUS METALS PRICE FORECAST</h1>
+    <h2>ARIMA time series forecast</h2>
+    <p>Enrique Pérez Herrero<br/>Mining Engineer</p>
+  </hgroup>
+  <article></article>  
+  <footer class = 'license'>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>
+    <img width = '80px' src = 'http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png'>
+    </a>
+  </footer>
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <article data-timings="">
+    <style>
+.title-slide {
+  background-color: #C8FE2E;
+}
+</style>
+
+<style>
+aside.gdbar img {
+  width:  85px; 
+  height: 85px; 
+  position: absolute;
+  right: 0;
+  margin: 5px 5px;
+}
+</style>
+
+<style>
+.testfont{
+  font-size: 12px;
+   }
+</style>
+
+<h2>Precious Metals Price ARIMA Forecast</h2>
+
+<ul>
+<li><a href="mailto:eph.project1500@gmail.com">Email</a><br></li>
+<li><a href="https://github.com/EnriquePH/Precious-Metals-Prediction">GNU GENERAL PUBLIC LICENSE Version 2, June 1991</a><br></li>
+<li><a href="https://kikesoft.shinyapps.io/Precious-Metals-Prediction">App url</a><br></li>
+<li><a href="https://github.com/EnriquePH/Precious-Metals-Prediction">GitHub url</a></li>
+</ul>
+
+<h2>Description:</h2>
+
+<ul>
+<li>Precious Metals Price ARIMA Forecast App downloads the last five years prices
+from <a href="http://www.oanda.com">Oanda</a> and forecast prices for the next year using
+<code>auto.arima</code> function from <code>forecast</code> R package.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Metals Plot</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <h2>App Side Bar Panel</h2>
+
+<h3>Select Metal Input</h3>
+
+<ul>
+<li>Select one of the known as precious metals:</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Metal</th>
+<th>Ticker</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Gold</td>
+<td>XAU</td>
+</tr>
+<tr>
+<td>Silver</td>
+<td>XAG</td>
+</tr>
+<tr>
+<td>Palladium</td>
+<td>XPD</td>
+</tr>
+<tr>
+<td>Platinum</td>
+<td>XPT</td>
+</tr>
+</tbody></table>
+
+<h3>Select Currency Input</h3>
+
+<ul>
+<li>One between US Dollars, British Pound, or Euro can be selected.</li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <iframe src ='figures/figure01.html', width = "400px", height = "400px">
+ </iframe> 
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>App Tab Panels</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <h3>- Prices Plot</h3>
+
+<p>Shows a price plot for the selected metal and currency, and a control to change adjusted statistics: linear or loess </p>
+
+<h3>- Prices Table</h3>
+
+<p>Shows the price table data for the selected metal and several currencies</p>
+
+<h3>- Forecast Plot</h3>
+
+<p>Shows the <a href="https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average">ARIMA</a> forecast for the next 365 days as a blue line, 80% confidence interval is displayed in orange, while 90% is in yellow.</p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <h3>- Forecast Table</h3>
+
+<p>Displays forecasted data table</p>
+
+<h3>- Arima model</h3>
+
+<p>Shows adjusted model using <code>auto.arima</code> from the <code>forecast</code> package</p>
+
+<h3>- Differences Plot</h3>
+
+<p>Plots first differences for the selected metal price or the differences of the data base 10 logarithm</p>
+
+<h3>- Residuals Plot</h3>
+
+<p>Plots the ACF and the <a href="https://en.wikipedia.org/wiki/Partial_autocorrelation_function">PACF</a></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class testfont" id="id" style="background:;">
+  <hgroup>
+    <h2>Links</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <ul>
+<li><a href="http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/">Autoplot: Graphical Methods with ggplot2</a><br></li>
+<li><a href="http://businessforecastblog.com/more-blackbox-analysis-arima-modeling-in-r/">More blackbox analysis - Arima modeling in R</a><br></li>
+<li><a href="https://en.wikipedia.org/wiki/Precious_metal">Precious Metals - Wikipedia</a><br></li>
+<li><a href="https://en.wikipedia.org/wiki/Palladium_as_an_investment">Palladium as an investment - Wikipedia</a><br></li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <ul>
+<li><a href="http://ucanalytics.com/blogs/step-by-step-graphic-guide-to-forecasting-through-arima-modeling-in-r-manufacturing-case-study-example/">Step-by-Step Graphic Guide to Forecasting through ARIMA Modeling in R - Manufacturing Case Study Example (Part 4)</a><br></li>
+<li>Automatic Time Series Forecasting: The forecast Package for R<br>
+<a href="http://www.jstatsoft.org/article/view/v027i03">Journal of Statistical Software July 2008, Volume 27, Issue 3.</a><br></li>
+<li><a href="https://www.otexts.org/fpp">Forecasting: principles and practice</a><br></li>
+<li><a href="http://www.oanda.com/">OANDA</a></li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='NA'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Metals Plot'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='App Tab Panels'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Links'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

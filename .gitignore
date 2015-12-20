@@ -1,0 +1,19 @@
+# EXPLOCAL .gitignore
+# (c) Kikesoft 2015
+
+# R Code 
+.Rhistory
+.RData
+.Rproj.user/
+.Rproj
+rsconnect/
+
+# LaTeX
+*.log
+*.aux
+*.synctex.gz
+*.blg
+
+# Other
+Readme.html
+docs/
