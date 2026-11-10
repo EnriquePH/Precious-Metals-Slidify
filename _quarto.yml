@@ -3,9 +3,6 @@ project:
   output-dir: _site
   render:
     - index.qmd
-  resources:
-    - legacy/
-    - .nojekyll
 
 lang: en
 editor: source

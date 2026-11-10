@@ -15,6 +15,8 @@ format:
     hash-type: number
     preview-links: auto
     footer: "[Precious Metals Price Forecast](https://github.com/EnriquePH/Precious-Metals-Slidify) · data: Yahoo Finance (COMEX/NYMEX futures)"
+resources:
+  - "legacy/**"
 execute:
   echo: false
   warning: false
