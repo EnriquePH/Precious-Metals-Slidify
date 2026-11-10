@@ -1,0 +1,192 @@
+---
+title: "Precious Metals Price Forecast"
+subtitle: "ARIMA forecasts for gold, silver, platinum and palladium, and how good they really are"
+lang: en
+date: 2026-11-10
+tags: [metales-preciosos, series-temporales, arima, presentacion, coursera]
+editor: source
+author: "Enrique Pérez Herrero"
+date-modified: today
+date-format: "D MMMM YYYY"
+format:
+  revealjs:
+    theme: [default, styles.scss]
+    slide-number: true
+    hash-type: number
+    preview-links: auto
+    footer: "[Precious Metals Price Forecast](https://github.com/EnriquePH/Precious-Metals-Slidify) · data: Yahoo Finance (COMEX/NYMEX futures)"
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+source("R/metals.R")
+library(ggplot2)
+prices <- load_prices()
+last_day <- max(prices$date)
+fits <- lapply(stats::setNames(levels(prices$metal), levels(prices$metal)),
+               function(m) forecast_metal(prices, m))
+bt <- backtest(prices)
+```
+
+## What this is
+
+- A small data product from the Coursera course *Developing Data Products* (2015),
+  rebuilt in `r format(Sys.Date(), "%Y")` with Quarto.
+- It downloads **five years** of daily prices of the four precious metals and
+  forecasts the next **`r HORIZON` trading days** (about three months) with
+  `auto.arima()` from the [forecast](https://pkg.robjhyndman.com/forecast/) package.
+- It also checks the forecasts against a **naive** one (tomorrow = today), which
+  is the honest benchmark for any asset price.
+- Companion Shiny app: [Precious-Metals-Prediction](https://github.com/EnriquePH/Precious-Metals-Prediction).
+
+::: {.aside}
+Data up to `r format(last_day, "%d %B %Y")`. Not investment advice.
+:::
+
+## The data
+
+::: {.columns}
+::: {.column width="45%"}
+| Metal     | Future | Exchange |
+|-----------|--------|----------|
+| Gold      | `GC=F` | COMEX    |
+| Silver    | `SI=F` | COMEX    |
+| Platinum  | `PL=F` | NYMEX    |
+| Palladium | `PA=F` | NYMEX    |
+
+Daily settlement of the front-month future, in USD per troy ounce, from Yahoo
+Finance; EUR and GBP prices use the `EURUSD=X` and `GBPUSD=X` rates of each day.
+:::
+
+::: {.column width="55%"}
+```{r}
+#| label: last-prices
+last <- do.call(rbind, lapply(split(prices, prices$metal), function(s) {
+  s <- s[order(s$date), ]
+  n <- nrow(s)
+  year_ago <- s$usd[max(1, n - 252)]
+  data.frame(Metal = s$metal[n], USD = s$usd[n], EUR = s$eur[n], GBP = s$gbp[n],
+             `1 year` = sprintf("%+.0f %%", 100 * (s$usd[n] / year_ago - 1)),
+             check.names = FALSE)
+}))
+knitr::kable(last, digits = 2, row.names = FALSE, format.args = list(big.mark = ","),
+             caption = sprintf("Last price per troy ounce (%s)", format(last_day, "%d/%m/%Y")))
+```
+:::
+:::
+
+## Five years of prices
+
+```{r}
+#| label: prices
+#| fig-height: 5.2
+#| fig-width: 11
+p <- ggplot(prices, aes(date, usd)) +
+  geom_line(colour = INK, linewidth = 0.4) +
+  facet_wrap(~metal, scales = "free_y", ncol = 2) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(x = NULL, y = "USD / oz") +
+  theme_metals(12)
+plotly::ggplotly(p, dynamicTicks = TRUE) |>
+  plotly::config(displaylogo = FALSE)
+```
+
+## Forecast: the next three months
+
+::: {.panel-tabset}
+
+```{r}
+#| label: forecasts
+#| results: asis
+#| fig-height: 4.6
+#| fig-width: 11
+for (m in names(fits)) {
+  cat("\n\n### ", m, "\n\n", sep = "")
+  print(plot_forecast(fits[[m]], m))
+}
+```
+
+:::
+
+::: {.aside}
+ARIMA on the logarithm of the price, so the bands are never negative and widen
+in proportion to the price. Dark band: 80 %; light band: 95 %.
+:::
+
+## Is ARIMA better than doing nothing?
+
+```{r}
+#| label: backtest
+better <- sum(bt$`RMSE ARIMA` < bt$`RMSE naive`)
+knitr::kable(bt, digits = 2, row.names = FALSE, format.args = list(big.mark = ","))
+```
+
+Each model is fitted leaving out the last `r HORIZON` days and compared with
+what really happened. ARIMA beats the naive forecast in **`r better` of 4**
+metals. Prices behave almost like a random walk: the useful output is the
+**width of the bands** (the risk), not the central line.
+
+## The model, step by step
+
+::: {.columns}
+::: {.column}
+1. **Logarithm** of the price: changes become percentages.
+2. **Differences**: `auto.arima()` tests for unit roots (KPSS) and almost always
+   takes one difference, the daily return.
+3. **Orders** *p* and *q* chosen by AICc.
+4. **Residuals**: should look like white noise (Ljung–Box test, right).
+:::
+
+::: {.column}
+```{r}
+#| label: residuals
+lb <- do.call(rbind, lapply(names(fits), function(m) {
+  fit <- fits[[m]]$fit
+  t <- stats::Box.test(stats::residuals(fit), lag = 20, type = "Ljung-Box",
+                       fitdf = sum(fit$arma[1:2]))
+  data.frame(Metal = m, Model = as.character(fit), AICc = fit$aicc,
+             `Ljung-Box p` = t$p.value, check.names = FALSE)
+}))
+knitr::kable(lb, digits = 3, row.names = FALSE)
+```
+
+A p-value above 0.05 means no autocorrelation is left in the residuals.
+Volatility clusters (calm and stormy periods) remain: that is a job for GARCH
+models, not ARIMA.
+:::
+:::
+
+## Then and now
+
+| | 2015 | `r format(Sys.Date(), "%Y")` |
+|---|---|---|
+| Slides | slidify (no longer maintained) | Quarto + reveal.js |
+| Data | Oanda, last 180 days (service closed) | Yahoo Finance futures, 5 years |
+| Charts | rCharts / Morris.js | ggplot2 + plotly |
+| Evaluation | none | back-test against the naive forecast |
+| Updates | by hand | GitHub Actions, every month |
+
+The original slides are kept unchanged in
+[`legacy/2015-slidify`](https://github.com/EnriquePH/Precious-Metals-Slidify/tree/master/legacy/2015-slidify)
+(tag `slidify-2015`).
+
+## Links
+
+::: {.columns}
+::: {.column}
+- Hyndman & Athanasopoulos, [*Forecasting: Principles and Practice*](https://otexts.com/fpp3/), 3rd ed.
+- Hyndman & Khandakar (2008), [Automatic time series forecasting: the forecast package for R](https://doi.org/10.18637/jss.v027.i03), *Journal of Statistical Software* 27(3).
+- [forecast](https://pkg.robjhyndman.com/forecast/) and [quantmod](https://www.quantmod.com/) R packages.
+:::
+
+::: {.column}
+- [Precious metal](https://en.wikipedia.org/wiki/Precious_metal) (Wikipedia).
+- [CME Group: metals futures](https://www.cmegroup.com/markets/metals.html).
+- Source of these slides: [github.com/EnriquePH/Precious-Metals-Slidify](https://github.com/EnriquePH/Precious-Metals-Slidify).
+- Contact: [eph.project1500@gmail.com](mailto:eph.project1500@gmail.com)
+:::
+:::
