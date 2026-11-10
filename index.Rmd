@@ -1,11 +1,11 @@
 ---
 title       : PRECIOUS METALS PRICE FORECAST
 subtitle    : ARIMA time series forecast
-author      : Enrique Pérez Herrero
+author      : Enrique Perez Herrero
 job         : Mining Engineer
 license     : by-nc-sa
 logo        : logo.png
-framework   : io2012      # {io2012, html5slides, shower, dzslides, ...}
+framework   : html5slides      # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : []            # {mathjax, quiz, bootstrap}
@@ -77,6 +77,7 @@ from [Oanda](http://www.oanda.com) and forecast prices for the next year using
 *** =right
 
 ```{r, echo=FALSE, message=FALSE, results="hide"}
+library(TTR)
 library(quantmod)
 library(shiny)
 library(forecast)
@@ -87,8 +88,8 @@ library(base64enc)
 
 # Parameters
 
-forecast.days <- 365
-max.range <- (5 * 365 - 13)
+forecast.days <- 90
+max.range <- 180
 
 # https://en.wikipedia.org/wiki/Precious_metal
 
@@ -133,7 +134,7 @@ metals.df <- getPreciousMetals(precious_metals, currency_list[1])
 m1 <- mPlot(x = 'date',
             y = paste(precious_metals, 'USD', sep = '.'),
             type = 'Line',
-            events = paste(2011:2016),
+            events = paste(2017:2018),
             eventLineColors = 'black',
             eventStrokeWidth = .1,
             data = metals.df
