@@ -97,3 +97,5 @@ rsconnect/
 /.quarto/
 index_files/
 Readme.html
+
+**/*.quarto_ipynb
