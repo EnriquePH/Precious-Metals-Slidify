@@ -3,7 +3,7 @@ name: Publish slides
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   schedule:
     - cron: "0 6 1 * *"   # first day of every month, 06:00 UTC
   workflow_dispatch:
